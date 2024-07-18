@@ -1,3 +1,5 @@
+// src/SignIn.js
+
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { authenticateUser } from "../../services/api";
 
 const defaultTheme = createTheme();
 
@@ -26,23 +28,33 @@ export default function SignIn() {
     const email = data.get("email");
     const password = data.get("password");
 
-    try {
-      const response = await axios.get(`/api/users`, {
-        params: {
-          email,
-          password,
-        },
-      });
+    // Verificar se os campos estão preenchidos
+    if (!email || !password) {
+      alert("Por favor, preencha todos os campos");
+      return;
+    }
 
-      if (response.data.length > 0) {
-        const user = response.data[0];
+    try {
+      const response = await authenticateUser(email, password);
+
+      if (response.length > 0) {
+        const user = response[0];
         login(user);
-        navigate("/");
+
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("userName", user.name);
+
+        if (user.role === "admin") {
+          navigate("/admin");
+        } else if (user.role === "user") {
+          navigate("/user");
+        } else {
+          navigate("/login");
+        }
       } else {
-        alert("Invalid email or password");
+        alert("Email ou senha inválidos");
       }
     } catch (error) {
-      console.error("Ocorreu um erro na autenticação", error);
       alert("Ocorreu um erro na autenticação");
     }
   };

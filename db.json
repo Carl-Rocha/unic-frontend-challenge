@@ -2,13 +2,29 @@
   "users": [
     {
       "id": 1,
-      "email": "user@example.com",
+      "email": "bea@gmail.com",
+      "name": "Beatriz Silva",
       "password": "password",
       "role": "user"
     },
     {
       "id": 2,
-      "email": "admin@example.com",
+      "email": "gleidson@gmail.com",
+      "name": "Gleison Jesus",
+      "password": "password",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "email": "edu@gmail.com",
+      "name": "Eduardo Teixeira",
+      "password": "password",
+      "role": "user"
+    },
+    {
+      "id": 100,
+      "email": "agathagrocha@gmail.com",
+      "name": "Agatha Rocha",
       "password": "admin",
       "role": "admin"
     }
