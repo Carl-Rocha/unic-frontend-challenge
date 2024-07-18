@@ -35,10 +35,9 @@ export default function SignIn() {
     }
 
     try {
-      const response = await authenticateUser(email, password);
+      const user = await authenticateUser(email, password);
 
-      if (response.length > 0) {
-        const user = response[0];
+      if (user) {
         login(user);
 
         localStorage.setItem("userId", user.id);

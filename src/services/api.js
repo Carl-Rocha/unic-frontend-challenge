@@ -9,11 +9,9 @@ const apiClient = axios.create({
 
 export const authenticateUser = async (email, password) => {
   try {
-    const response = await apiClient.get("/users", {
-      params: {
-        email,
-        password,
-      },
+    const response = await apiClient.post("/auth", {
+      email,
+      password,
     });
     return response.data;
   } catch (error) {
@@ -31,11 +29,10 @@ export const getUsers = async () => {
     throw error;
   }
 };
+
 export const getUserById = async (id) => {
   try {
-    const response = await apiClient.get("/users", {
-      params: { id },
-    });
+    const response = await apiClient.get(`/users/${id}`);
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar usuário por ID", error);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import UsersTable from "../UsersTable";
 
 const DashboardUser = () => {
   const [userName, setUserName] = useState(null);
@@ -49,6 +50,7 @@ const DashboardUser = () => {
           </Typography>
         )}
       </Box>
+      <UsersTable />
     </Container>
   );
 };
