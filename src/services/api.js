@@ -20,9 +20,13 @@ export const authenticateUser = async (email, password) => {
   }
 };
 
-export const getUsers = async () => {
+export const getUsers = async (searchTerm, token) => {
   try {
-    const response = await apiClient.get("/users");
+    const response = await apiClient.get(`/users?q=${searchTerm}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar usuários", error);
