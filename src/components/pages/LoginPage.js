@@ -1,6 +1,5 @@
-// src/SignIn.js
-
 import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,44 +17,51 @@ import { authenticateUser } from "../../services/api";
 
 const defaultTheme = createTheme();
 
+const useAuthenticationRedirect = (isAuthenticated, navigate) => {
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/user");
+    }
+  }, [isAuthenticated, navigate]);
+};
+
+const handleUserAuthentication = async (email, password, login, navigate) => {
+  try {
+    const user = await authenticateUser(email, password);
+
+    if (user) {
+      login(user);
+      localStorage.setItem("userId", user.id);
+      localStorage.setItem("userName", user.name);
+
+      const userRole = user.role === "admin" ? "/admin" : "/user";
+      navigate(userRole);
+    } else {
+      alert("Email ou senha inválidos");
+    }
+  } catch (error) {
+    alert("Ocorreu um erro na autenticação");
+  }
+};
+
 export default function SignIn() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  useAuthenticationRedirect(isAuthenticated, navigate);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
 
-    // Verificar se os campos estão preenchidos
     if (!email || !password) {
       alert("Por favor, preencha todos os campos");
       return;
     }
 
-    try {
-      const user = await authenticateUser(email, password);
-
-      if (user) {
-        login(user);
-
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("userName", user.name);
-
-        if (user.role === "admin") {
-          navigate("/admin");
-        } else if (user.role === "user") {
-          navigate("/user");
-        } else {
-          navigate("/login");
-        }
-      } else {
-        alert("Email ou senha inválidos");
-      }
-    } catch (error) {
-      alert("Ocorreu um erro na autenticação");
-    }
+    handleUserAuthentication(email, password, login, navigate);
   };
 
   return (

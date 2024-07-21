@@ -41,7 +41,7 @@ const UsersTable = () => {
     <div style={{ padding: "20px" }}>
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <TextField
-          label="Search by name or email"
+          label="Insira email ou nome"
           variant="outlined"
           fullWidth
           value={searchTerm}

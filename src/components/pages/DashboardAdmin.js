@@ -2,34 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { getUsers } from "../../services/api";
+import UsersTable from "../UsersTable";
 
 const DashboardUser = () => {
   const [userName, setUserName] = useState(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
-
+  const { logout, isAuthenticated } = useAuth();
   useEffect(() => {
-    const fetchUserName = async () => {
-      try {
-        const storedUserId = localStorage.getItem("userId");
-        if (storedUserId) {
-          const users = await getUsers();
-          const user = users.find((u) => u.id === storedUserId);
-          if (user) {
-            setUserName(user.name);
-          }
-        }
-      } catch (error) {
-        console.error("Erro ao buscar o nome do usuário", error);
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      const storedUserName = localStorage.getItem("userName");
+      if (storedUserName) {
+        setUserName(storedUserName);
       }
-    };
-
-    fetchUserName();
-  }, []);
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogout = () => {
     logout();
+    localStorage.clear();
     navigate("/login");
   };
 
@@ -44,7 +36,7 @@ const DashboardUser = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Painel Admin
+          Página Simples de Usuário
         </Typography>
         {userName ? (
           <>
@@ -57,10 +49,11 @@ const DashboardUser = () => {
           </>
         ) : (
           <Typography component="p" variant="body1">
-            Carregando...
+            Usuário não localizado
           </Typography>
         )}
       </Box>
+      <UsersTable />
     </Container>
   );
 };

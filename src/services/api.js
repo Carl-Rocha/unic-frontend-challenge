@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3001", // Base URL da sua API
+  baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
@@ -36,6 +36,18 @@ export const getUserById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar usuário por ID", error);
+    throw error;
+  }
+};
+
+export const updateUserPassword = async (id, newPassword) => {
+  try {
+    const user = await getUserById(id);
+    user.password = newPassword;
+    const response = await apiClient.put(`/users/${id}`, user);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao atualizar a senha do usuário", error);
     throw error;
   }
 };
