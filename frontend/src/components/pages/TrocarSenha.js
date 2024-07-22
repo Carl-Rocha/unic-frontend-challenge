@@ -1,8 +1,9 @@
+// TrocarSenha.js
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Box, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import axios from "axios";
+import { updateUserPassword } from "../../services/api";
 
 const TrocarSenha = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -24,24 +25,31 @@ const TrocarSenha = () => {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/change-password",
-        {
-          id: user.id,
-          currentPassword,
-          newPassword,
-        }
-      );
+    if (!currentPassword || !newPassword) {
+      setError("Preencha todos os campos.");
+      return;
+    }
 
-      if (response.status === 200) {
-        setSuccess("Senha trocada com sucesso!");
-        setError("");
-        alert("Senha trocada com sucesso!");
-        navigate("/user");
-      }
+    if (currentPassword === newPassword) {
+      setError("A nova senha deve ser diferente da atual.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setError("Token não encontrado. Faça login novamente.");
+      return;
+    }
+
+    try {
+      await updateUserPassword(user.id, currentPassword, newPassword, token);
+      setSuccess("Senha trocada com sucesso!");
+      setError("");
+      alert("Senha trocada com sucesso!");
+      navigate("/user");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response?.data?.error || "Erro ao trocar senha");
       setSuccess("");
     }
   };

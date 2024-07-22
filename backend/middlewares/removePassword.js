@@ -1,3 +1,4 @@
+// removePassword.js
 module.exports = (req, res, next) => {
   if (req.method === "GET" && req.url.startsWith("/users")) {
     const send = res.send;

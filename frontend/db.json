@@ -4,21 +4,21 @@
       "id": 2,
       "email": "gleidson@gmail.com",
       "name": "Gleison Jesus",
-      "password": "password",
+      "password": "$2a$10$m02TADZ.R92fSbBZ.2k3a.38C9oUinhwLGaV/gDsOxGBD2elD9ZJG",
       "role": "user"
     },
     {
       "id": 3,
       "email": "edu@gmail.com",
       "name": "Eduardo Teixeira",
-      "password": "password2",
+      "password": "$2a$10$PyVo/XkjT9YUR27xIBJnneYOG1hZaLQ.9fMdMRuIAytd1iRogpiU6",
       "role": "user"
     },
     {
       "id": 100,
       "email": "agathagrocha@gmail.com",
       "name": "Agatha Rocha",
-      "password": "admin",
+      "password": "$2a$10$rZ1YiLO0lPIByNDUwQFU0uJ6CwGU/FOzNixMQ8m.p79kkt90smohe",
       "role": "admin"
     }
   ]

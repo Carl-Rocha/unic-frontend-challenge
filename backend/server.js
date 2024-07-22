@@ -6,7 +6,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 
 const server = jsonServer.create();
-const router = jsonServer.router("db.json");
+const router = jsonServer.router("../db.json");
 const middlewares = jsonServer.defaults();
 
 server.use(express.json());

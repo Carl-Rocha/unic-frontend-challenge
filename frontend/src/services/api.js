@@ -44,11 +44,26 @@ export const getUserById = async (id) => {
   }
 };
 
-export const updateUserPassword = async (id, newPassword) => {
+export const updateUserPassword = async (
+  id,
+  currentPassword,
+  newPassword,
+  token
+) => {
   try {
-    const user = await getUserById(id);
-    user.password = newPassword;
-    const response = await apiClient.put(`/users/${id}`, user);
+    const response = await apiClient.post(
+      `users/change-password`,
+      {
+        id,
+        currentPassword,
+        newPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Erro ao atualizar a senha do usuário", error);
