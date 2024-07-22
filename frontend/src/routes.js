@@ -5,7 +5,7 @@ import {
   DashboardAdmin,
   DashboardUser,
   TrocarSenha,
-} from "./components/pages/index";
+} from "./pages/index";
 import Navbar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Box, Button } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import UsersTable from "../UsersTable";
+import { useAuth } from "../context/AuthContext";
+import UsersTable from "../components/UsersTable";
 
-const DashboardUser = () => {
+const DashboardAdmin = () => {
   const [userName, setUserName] = useState(null);
   const navigate = useNavigate();
-  const { logout, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -18,12 +19,6 @@ const DashboardUser = () => {
       }
     }
   }, [isAuthenticated, navigate]);
-
-  const handleLogout = () => {
-    logout();
-    localStorage.clear();
-    navigate("/login");
-  };
 
   return (
     <Container maxWidth="sm">
@@ -36,16 +31,13 @@ const DashboardUser = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Página Simples de Usuário
+          Painel admin
         </Typography>
         {userName ? (
           <>
             <Typography component="p" variant="body1">
               Bem-vindo(a), {userName}
             </Typography>
-            <Button variant="contained" sx={{ mt: 3 }} onClick={handleLogout}>
-              Sair
-            </Button>
           </>
         ) : (
           <Typography component="p" variant="body1">
@@ -58,4 +50,4 @@ const DashboardUser = () => {
   );
 };
 
-export default DashboardUser;
+export default DashboardAdmin;

@@ -19,7 +19,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth(); // Adicionado 'user' ao contexto
 
   const handleMenuOpen = (setter) => (event) => {
     setter(event.currentTarget);
@@ -122,18 +122,20 @@ const Navbar = () => {
             >
               Início
             </Button>
-            <Button
-              color="inherit"
-              onClick={handleNavigation("/navegacao")}
-              sx={{
-                my: 2,
-                display: "block",
-                ":hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
-                ":active": { backgroundColor: "rgba(255, 255, 255, 0.2)" },
-              }}
-            >
-              Editar Usuários
-            </Button>
+            {user?.role === "admin" && ( // Verifica se o usuário é admin
+              <Button
+                color="inherit"
+                onClick={handleNavigation("/navegacao")}
+                sx={{
+                  my: 2,
+                  display: "block",
+                  ":hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+                  ":active": { backgroundColor: "rgba(255, 255, 255, 0.2)" },
+                }}
+              >
+                Editar Usuários
+              </Button>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

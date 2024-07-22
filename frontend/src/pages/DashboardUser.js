@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import UsersTable from "../UsersTable";
+import { useAuth } from "../context/AuthContext";
+import UsersTable from "../components/UsersTable";
 
 const DashboardUser = () => {
   const [userName, setUserName] = useState(null);
@@ -31,7 +31,7 @@ const DashboardUser = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Página Simples de Usuário
+          Página de Usuário
         </Typography>
         {userName ? (
           <>
