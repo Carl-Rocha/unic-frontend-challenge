@@ -31,7 +31,7 @@ const DashboardUser = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Página de Usuário
+          Página simples de Usuário
         </Typography>
         {userName ? (
           <>
