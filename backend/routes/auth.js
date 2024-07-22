@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 // const jsonServer = require("json-server");
-const db = require("../tmp/db.json");
+const db = require("../db.json");
 const bcrypt = require("bcryptjs");
 const config = require("../config/auth.json");
 // const routerDB = jsonServer.router("../tmp/db.json");
