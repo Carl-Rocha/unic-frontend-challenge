@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const jsonServer = require("json-server");
 const bcrypt = require("bcryptjs");
 const config = require("../config/auth.json");
-const routerDB = jsonServer.router("../db.json");
+const routerDB = jsonServer.router("../tmp/db.json");
 
 const router = express.Router();
 const SECRET_KEY = config.SECRET_KEY;
