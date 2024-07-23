@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 });
 
 // Create a new user
-router.post("/", isAdmin, async (req, res) => {
+router.post("/", async (req, res) => {
   const { email, name, password, role } = req.body;
   const existingUser = db.users.find((user) => user.email === email);
   if (existingUser) {
@@ -38,7 +38,7 @@ router.post("/", isAdmin, async (req, res) => {
     email,
     name,
     password: hashedPassword,
-    role,
+    role: role || "user",
   };
 
   db.users.push(newUser);

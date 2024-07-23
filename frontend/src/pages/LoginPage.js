@@ -64,6 +64,10 @@ export default function SignIn() {
     handleUserAuthentication(email, password, login, navigate);
   };
 
+  const handleCreateUser = () => {
+    navigate("/create-user");
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -119,6 +123,14 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 1 }}
+              onClick={handleCreateUser}
+            >
+              Criar Usuário
             </Button>
           </Box>
         </Box>

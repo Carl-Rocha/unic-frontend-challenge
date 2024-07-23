@@ -87,9 +87,11 @@ const Navbar = () => {
               <MenuItem onClick={handleNavigation("/user")}>
                 <Typography textAlign="center">Início</Typography>
               </MenuItem>
-              <MenuItem onClick={handleNavigation("/editar-usuario")}>
-                <Typography textAlign="center">Editar Usuários</Typography>
-              </MenuItem>
+              {user?.role === "admin" && (
+                <MenuItem onClick={handleNavigation("/editar-usuario")}>
+                  <Typography textAlign="center">Editar Usuários</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 

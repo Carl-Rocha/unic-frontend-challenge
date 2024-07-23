@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage";
 import TrocarSenha from "./TrocarSenha";
 import Navbar from "../components/NavBar";
 import EditUser from "./EditUser";
+import CreateUser from "./CreateUserPage";
 
 export {
   DashboardAdmin,
@@ -12,4 +13,5 @@ export {
   TrocarSenha,
   Navbar,
   EditUser,
+  CreateUser,
 };

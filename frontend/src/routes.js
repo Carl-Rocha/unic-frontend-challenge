@@ -6,19 +6,22 @@ import {
   DashboardUser,
   TrocarSenha,
   EditUser,
+  CreateUser,
 } from "./pages/index";
 import Navbar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const AppRoutes = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
+  const isLoginPage =
+    location.pathname === "/login" || location.pathname === "/create-user";
 
   return (
     <>
       {!isLoginPage && <Navbar />}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/create-user" element={<CreateUser />} />
         <Route
           path="/user"
           element={
