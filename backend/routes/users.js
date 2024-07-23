@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db.json");
 const bcrypt = require("bcryptjs");
 const verifyToken = require("../middlewares/verifyToken");
+const isAdmin = require("../middlewares/isAdmin");
 
 // Get users with search functionality
 router.get("/", (req, res) => {
@@ -22,7 +23,7 @@ router.get("/", (req, res) => {
 });
 
 // Create a new user
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
   const { email, name, password, role } = req.body;
   const existingUser = db.users.find((user) => user.email === email);
   if (existingUser) {
@@ -44,7 +45,8 @@ router.post("/", verifyToken, async (req, res) => {
   res.status(201).json(newUser);
 });
 
-router.put("/:id", async (req, res) => {
+// Update a user
+router.put("/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
   const { email, name, password, role } = req.body;
   const user = db.users.find((user) => user.id === parseInt(id));
@@ -64,7 +66,8 @@ router.put("/:id", async (req, res) => {
   res.status(200).json(user);
 });
 
-router.delete("/:id", verifyToken, (req, res) => {
+// Delete a user
+router.delete("/:id", isAdmin, (req, res) => {
   const { id } = req.params;
   const userIndex = db.users.findIndex((user) => user.id === parseInt(id));
   if (userIndex === -1) {
@@ -73,6 +76,25 @@ router.delete("/:id", verifyToken, (req, res) => {
 
   db.users.splice(userIndex, 1);
   res.status(204).send();
+});
+
+router.put("/change-password/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { currentPassword, newPassword } = req.body;
+  const user = db.users.find((user) => user.id === parseInt(id));
+  if (!user) {
+    return res.status(404).json({ error: "Usuário não encontrado" });
+  }
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return res.status(400).json({ error: "Senha atual incorreta" });
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(newPassword, salt);
+
+  res.status(200).json({ message: "Senha alterada com sucesso" });
 });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 // verifyToken.js
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.json");
+
 const SECRET_KEY = config.SECRET_KEY;
 
 module.exports = (req, res, next) => {

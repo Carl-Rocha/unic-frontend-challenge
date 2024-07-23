@@ -12,13 +12,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
-import { getUsers, updateUser } from "../services/api"; // Ajuste o caminho conforme necessário
+import { getUsers, updateUser, deleteUser } from "../services/api"; // Ajuste o caminho conforme necessário
 import { useAuth } from "../context/AuthContext";
 
-const UsersTable = ({ onSelectUser }) => {
+const UsersTable = ({
+  onSelectUser,
+  onDeleteUser,
+  filteredUsers,
+  setFilteredUsers,
+  openConfirmationDialog,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState("");
 
   const handleSearch = async () => {
@@ -91,6 +101,16 @@ const UsersTable = ({ onSelectUser }) => {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
                     <Button onClick={() => onSelectUser(user)}>Editar</Button>
+                    <Button
+                      onClick={() =>
+                        openConfirmationDialog("delete", () =>
+                          onDeleteUser(user.id)
+                        )
+                      }
+                      color="error"
+                    >
+                      Deletar
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -110,9 +130,13 @@ const EditUser = () => {
     role: "",
   });
   const [user, setUser] = useState(null);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { token } = useAuth();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogAction, setDialogAction] = useState(null);
 
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -141,6 +165,38 @@ const EditUser = () => {
     setSuccess("");
   };
 
+  const handleDeleteUser = async (userId) => {
+    try {
+      await deleteUser(userId, token);
+      setSuccess("Usuário deletado com sucesso!");
+      setError("");
+      // Remover o usuário deletado da lista de usuários filtrados
+      setFilteredUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id !== userId)
+      );
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+      setError("Erro ao deletar usuário.");
+    }
+  };
+
+  const openConfirmationDialog = (action, confirmAction) => {
+    setDialogAction(() => confirmAction);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setDialogAction(null);
+  };
+
+  const handleDialogConfirm = () => {
+    if (dialogAction) {
+      dialogAction();
+    }
+    handleDialogClose();
+  };
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -158,7 +214,13 @@ const EditUser = () => {
         {error && <Typography color="error">{error}</Typography>}
         {success && <Typography color="success">{success}</Typography>}
 
-        <UsersTable onSelectUser={handleSelectUser} />
+        <UsersTable
+          onSelectUser={handleSelectUser}
+          onDeleteUser={handleDeleteUser}
+          filteredUsers={filteredUsers}
+          setFilteredUsers={setFilteredUsers}
+          openConfirmationDialog={openConfirmationDialog}
+        />
 
         {user && (
           <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
@@ -218,6 +280,28 @@ const EditUser = () => {
             </Box>
           </Paper>
         )}
+
+        <Dialog
+          open={dialogOpen}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Confirmação"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Você tem certeza disso?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose} color="primary">
+              Cancelar
+            </Button>
+            <Button onClick={handleDialogConfirm} color="primary" autoFocus>
+              Confirmar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Container>
   );

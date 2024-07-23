@@ -12,7 +12,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { updateUserPassword } from "../services/api";
@@ -20,8 +28,14 @@ import { updateUserPassword } from "../services/api";
 const TrocarSenha = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogAction, setDialogAction] = useState(null);
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
 
@@ -31,14 +45,27 @@ const TrocarSenha = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const handleClickShowPassword = (setShowPassword, showPassword) => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const handleChangePassword = async () => {
     if (!user || !user.id) {
       setError("Usuário não autenticado ou ID do usuário não disponível");
       return;
     }
 
-    if (!currentPassword || !newPassword) {
+    if (!currentPassword || !newPassword || !confirmPassword) {
       setError("Preencha todos os campos.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError("A nova senha e a confirmação de senha não coincidem.");
       return;
     }
 
@@ -54,16 +81,35 @@ const TrocarSenha = () => {
       return;
     }
 
-    try {
-      await updateUserPassword(user.id, currentPassword, newPassword, token);
-      setSuccess("Senha trocada com sucesso!");
-      setError("");
-      alert("Senha trocada com sucesso!");
-      navigate("/user");
-    } catch (error) {
-      setError(error.response?.data?.error || "Erro ao trocar senha");
-      setSuccess("");
+    openConfirmationDialog(async () => {
+      try {
+        await updateUserPassword(user.id, currentPassword, newPassword, token);
+        setSuccess("Senha trocada com sucesso!");
+        setError("");
+        alert("Senha trocada com sucesso!");
+        navigate("/user");
+      } catch (error) {
+        setError(error.response?.data?.error || "Erro ao trocar senha");
+        setSuccess("");
+      }
+    });
+  };
+
+  const openConfirmationDialog = (confirmAction) => {
+    setDialogAction(() => confirmAction);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setDialogAction(null);
+  };
+
+  const handleDialogConfirm = () => {
+    if (dialogAction) {
+      dialogAction();
     }
+    handleDialogClose();
   };
 
   return (
@@ -139,11 +185,28 @@ const TrocarSenha = () => {
           fullWidth
           name="currentPassword"
           label="Senha Atual"
-          type="password"
+          type={showCurrentPassword ? "text" : "password"}
           id="currentPassword"
           autoComplete="current-password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() =>
+                    handleClickShowPassword(
+                      setShowCurrentPassword,
+                      showCurrentPassword
+                    )
+                  }
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           margin="normal"
@@ -151,11 +214,54 @@ const TrocarSenha = () => {
           fullWidth
           name="newPassword"
           label="Nova Senha"
-          type="password"
+          type={showNewPassword ? "text" : "password"}
           id="newPassword"
           autoComplete="new-password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() =>
+                    handleClickShowPassword(setShowNewPassword, showNewPassword)
+                  }
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="confirmPassword"
+          label="Confirmar Nova Senha"
+          type={showConfirmPassword ? "text" : "password"}
+          id="confirmPassword"
+          autoComplete="new-password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() =>
+                    handleClickShowPassword(
+                      setShowConfirmPassword,
+                      showConfirmPassword
+                    )
+                  }
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <Button
           variant="contained"
@@ -165,6 +271,27 @@ const TrocarSenha = () => {
           Trocar Senha
         </Button>
       </Paper>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirmação"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Você tem certeza que deseja trocar a senha?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleDialogConfirm} color="primary" autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
