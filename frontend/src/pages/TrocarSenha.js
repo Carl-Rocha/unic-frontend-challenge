@@ -1,6 +1,18 @@
-// TrocarSenha.js
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Box, Button, TextField } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  Button,
+  TextField,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { updateUserPassword } from "../services/api";
@@ -64,6 +76,50 @@ const TrocarSenha = () => {
           alignItems: "center",
         }}
       >
+        <Typography component="h1" variant="h3">
+          Meu Perfil
+        </Typography>
+      </Box>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 4,
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead></TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Nome</TableCell>
+                <TableCell>{user.name}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Login</TableCell>
+                <TableCell>{user.email}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Role</TableCell>
+                <TableCell>{user.role}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 4,
+          marginTop: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Typography component="h1" variant="h5">
           Trocar Senha
         </Typography>
@@ -108,7 +164,7 @@ const TrocarSenha = () => {
         >
           Trocar Senha
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

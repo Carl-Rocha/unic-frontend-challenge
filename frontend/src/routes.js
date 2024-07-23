@@ -5,6 +5,7 @@ import {
   DashboardAdmin,
   DashboardUser,
   TrocarSenha,
+  EditUser,
 } from "./pages/index";
 import Navbar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -39,6 +40,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <DashboardAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editar-usuario"
+          element={
+            <ProtectedRoute>
+              <EditUser />
             </ProtectedRoute>
           }
         />

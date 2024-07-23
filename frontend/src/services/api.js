@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://unic-frontend-challenge-server.vercel.app/",
+  baseURL: "http://localhost:3001/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -67,6 +67,20 @@ export const updateUserPassword = async (
     return response.data;
   } catch (error) {
     console.error("Erro ao atualizar a senha do usuário", error);
+    throw error;
+  }
+};
+
+export const updateUser = async (id, data, token) => {
+  try {
+    const response = await apiClient.put(`/users/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao atualizar usuário", error);
     throw error;
   }
 };
