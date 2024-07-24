@@ -3,10 +3,9 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import CreateUser from "./CreateUserPage";
 import { createUser } from "../../services/api/api";
+import "@testing-library/jest-dom";
 
 jest.mock("../../services/api/api");
-
-global.alert = jest.fn();
 
 test("renders CreateUser and submits form", async () => {
   createUser.mockResolvedValueOnce({});
@@ -39,5 +38,15 @@ test("renders CreateUser and submits form", async () => {
     });
   });
 
-  expect(global.alert).toHaveBeenCalledWith("Usuário criado com sucesso");
+  await waitFor(() => {
+    expect(screen.getByText("Usuário criado com sucesso")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByRole("button", { name: /Ok/i }));
+
+  await waitFor(() => {
+    expect(
+      screen.queryByText("Usuário criado com sucesso")
+    ).not.toBeInTheDocument();
+  });
 });

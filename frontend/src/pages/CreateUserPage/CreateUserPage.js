@@ -11,6 +11,15 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { createUser } from "../../services/api/api";
 import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const defaultTheme = createTheme();
 
@@ -20,7 +29,9 @@ export default function CreateUser() {
     email: "",
     password: "",
   });
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,14 +42,26 @@ export default function CreateUser() {
     }));
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createUser(userData);
-      alert("Usuário criado com sucesso");
-      navigate("/");
+      setDialogMessage("Usuário criado com sucesso");
+      setOpenDialog(true);
     } catch (error) {
-      alert("Erro ao criar usuário");
+      setDialogMessage("Erro ao criar usuário");
+      setOpenDialog(true);
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    if (dialogMessage === "Usuário criado com sucesso") {
+      navigate("/");
     }
   };
 
@@ -95,11 +118,23 @@ export default function CreateUser() {
               fullWidth
               name="password"
               label="Senha"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               value={userData.password}
               onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"
@@ -112,6 +147,24 @@ export default function CreateUser() {
           </Box>
         </Box>
       </Container>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Mensagem"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }
