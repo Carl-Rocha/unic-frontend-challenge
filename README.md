@@ -91,18 +91,18 @@ npm test
 
 ## Credenciais para Login
 
-| -   | ID                     | Email            | Nome     | Senha | Role |
-| --- | ---------------------- | ---------------- | -------- | ----- | ---- |
-| 2   | gleidson@gmail.com     | Gleison Jesus    | password | user  |
-| 3   | edu@gmail.com          | Eduardo Teixeira | password | user  |
-| 4   | agathagrocha@gmail.com | Agatha Rocha     | admin    | admin |
-| 5   | maria@gmail.com        | Maria Silva      | password | user  |
-| 6   | joao@gmail.com         | João Souza       | password | user  |
-| 7   | ana@gmail.com          | Ana Oliveira     | admin    | admin |
-| 8   | carlos@gmail.com       | Carlos Lima      | password | user  |
-| 9   | lucas@gmail.com        | Lucas Fernandes  | password | user  |
-| 10  | juliana@gmail.com      | Juliana Costa    | admin    | admin |
-| 11  | roberto@gmail.com      | Roberto Marques  | password | user  |
+| -   | ID                     | Email            | Nome     | Senha | Role  |
+| --- | ---------------------- | ---------------- | -------- | ----- | ----- |
+| 2   | gleidson@gmail.com     | Gleison Jesus    | password | user  | user  |
+| 3   | edu@gmail.com          | Eduardo Teixeira | password | user  | user  |
+| 4   | agathagrocha@gmail.com | Agatha Rocha     | admin    | admin | admin |
+| 5   | maria@gmail.com        | Maria Silva      | password | user  | user  |
+| 6   | joao@gmail.com         | João Souza       | password | user  | user  |
+| 7   | ana@gmail.com          | Ana Oliveira     | admin    | admin | admin |
+| 8   | carlos@gmail.com       | Carlos Lima      | password | user  | user  |
+| 9   | lucas@gmail.com        | Lucas Fernandes  | password | user  | user  |
+| 10  | juliana@gmail.com      | Juliana Costa    | admin    | admin | admin |
+| 11  | roberto@gmail.com      | Roberto Marques  | password | user  | user  |
 
 ## Decisões de Projeto
 
