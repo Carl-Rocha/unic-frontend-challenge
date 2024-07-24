@@ -152,6 +152,7 @@ const EditUser = () => {
       await updateUser(user.id, form, token);
       setSuccess("Usuário atualizado com sucesso!");
       setError("");
+      console.log("Sucesso:", "Usuário atualizado com sucesso!"); // Log para verificar a mensagem de sucesso
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
       setError("Erro ao atualizar usuário.");
@@ -254,6 +255,7 @@ const EditUser = () => {
                   label="Nome"
                   value={form.name}
                   onChange={handleInputChange}
+                  inputProps={{ "data-testid": "name-input" }}
                 />
                 <TextField
                   margin="normal"

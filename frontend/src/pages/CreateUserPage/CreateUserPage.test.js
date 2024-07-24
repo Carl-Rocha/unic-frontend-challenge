@@ -4,9 +4,13 @@ import { MemoryRouter } from "react-router-dom";
 import CreateUser from "./CreateUserPage";
 import { createUser } from "../../services/api/api";
 
-jest.mock("../../services/__mocks__/api");
+jest.mock("../../services/api/api");
 
-test("renders CreateUserPage and submits form", async () => {
+global.alert = jest.fn();
+
+test("renders CreateUser and submits form", async () => {
+  createUser.mockResolvedValueOnce({});
+
   render(
     <MemoryRouter>
       <CreateUser />
@@ -16,9 +20,11 @@ test("renders CreateUserPage and submits form", async () => {
   fireEvent.change(screen.getByLabelText(/Nome/i), {
     target: { value: "Test User" },
   });
+
   fireEvent.change(screen.getByLabelText(/Email/i), {
     target: { value: "test@example.com" },
   });
+
   fireEvent.change(screen.getByLabelText(/Senha/i), {
     target: { value: "password" },
   });
@@ -32,4 +38,6 @@ test("renders CreateUserPage and submits form", async () => {
       password: "password",
     });
   });
+
+  expect(global.alert).toHaveBeenCalledWith("Usuário criado com sucesso");
 });

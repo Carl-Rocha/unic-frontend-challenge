@@ -207,7 +207,9 @@ const TrocarSenha = () => {
               </InputAdornment>
             ),
           }}
+          inputProps={{ "data-testid": "currentPassword" }}
         />
+
         <TextField
           margin="normal"
           required
@@ -233,7 +235,9 @@ const TrocarSenha = () => {
               </InputAdornment>
             ),
           }}
+          inputProps={{ "data-testid": "newPassword" }}
         />
+
         <TextField
           margin="normal"
           required
@@ -262,6 +266,7 @@ const TrocarSenha = () => {
               </InputAdornment>
             ),
           }}
+          inputProps={{ "data-testid": "confirmPassword" }}
         />
         <Button
           variant="contained"

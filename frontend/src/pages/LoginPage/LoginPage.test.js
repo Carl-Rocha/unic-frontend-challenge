@@ -1,46 +1,57 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import { MemoryRouter } from "react-router-dom";
-import LoginPage from "./LoginPage";
-import { AuthContext } from "../../context/AuthContext";
+import SignIn from "./LoginPage";
+import { useAuth } from "../../context/AuthContext";
 
-// Mock do módulo do contexto
-jest.mock("../../context/AuthContext");
+jest.mock("../../context/AuthContext", () => ({
+  useAuth: jest.fn(),
+}));
 
-const mockAuthContext = {
-  login: jest.fn(),
-  user: null,
-  isAuthenticated: false,
-  logout: jest.fn(),
-};
+jest.mock("../../services/api/api", () => ({
+  authenticateUser: jest.fn(),
+}));
 
-test("renders LoginPage and submits form", async () => {
-  render(
-    <AuthContext.Provider value={mockAuthContext}>
+const mockNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
+
+describe("SignIn", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("renders SignIn component", () => {
+    useAuth.mockReturnValue({ isAuthenticated: false, login: jest.fn() });
+
+    render(
       <MemoryRouter>
-        <LoginPage />
+        <SignIn />
       </MemoryRouter>
-    </AuthContext.Provider>
-  );
+    );
 
-  // Simula a entrada do email
-  fireEvent.change(screen.getByLabelText(/Email/i), {
-    target: { value: "test@example.com" },
+    expect(
+      screen.getByRole("heading", { name: /Sign in/i })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
   });
 
-  // Simula a entrada da senha
-  fireEvent.change(screen.getByLabelText(/Senha/i), {
-    target: { value: "password" },
-  });
+  test("navigates to create user page when 'Criar Usuário' button is clicked", () => {
+    useAuth.mockReturnValue({ isAuthenticated: false, login: jest.fn() });
 
-  // Simula o clique no botão de login
-  fireEvent.click(screen.getByRole("button", { name: /Login/i }));
+    render(
+      <MemoryRouter>
+        <SignIn />
+      </MemoryRouter>
+    );
 
-  // Aguarda a chamada da função login
-  await waitFor(() => {
-    expect(mockAuthContext.login).toHaveBeenCalledWith({
-      email: "test@example.com",
-      password: "password",
-    });
+    fireEvent.click(screen.getByText(/Criar Usuário/i));
+
+    expect(mockNavigate).toHaveBeenCalledWith("/create-user");
   });
 });

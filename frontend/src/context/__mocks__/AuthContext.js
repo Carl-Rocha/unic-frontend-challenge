@@ -51,4 +51,4 @@ const AuthProvider = ({ children }) => {
 
 const useAuth = () => useContext(AuthContext);
 
-export { AuthProvider, AuthContext, useAuth, mockAuthContext as defaul
+export { AuthProvider, AuthContext, useAuth, mockAuthContext as default };
