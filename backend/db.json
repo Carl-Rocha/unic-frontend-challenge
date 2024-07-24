@@ -4,22 +4,71 @@
       "id": 2,
       "email": "gleidson@gmail.com",
       "name": "Gleison Jesus",
-      "password": "$2a$10$m02TADZ.R92fSbBZ.2k3a.38C9oUinhwLGaV/gDsOxGBD2elD9ZJG",
+      "password": "$2b$10$ILC3TZ8f9dwBlOIBHBdDfOgqUepzhFiivbnbtYIwKQ14sbxMfwR.m",
       "role": "user"
     },
     {
       "id": 3,
       "email": "edu@gmail.com",
       "name": "Eduardo Teixeira",
-      "password": "$2a$10$PyVo/XkjT9YUR27xIBJnneYOG1hZaLQ.9fMdMRuIAytd1iRogpiU6",
+      "password": "$2b$10$MitcEwKt/sxr65rT9OEjzOeYAXWZ2tlH3U7AjOuv/jzFYa3GVQzzC",
       "role": "user"
     },
     {
       "id": 100,
       "email": "agathagrocha@gmail.com",
       "name": "Agatha Rocha",
-      "password": "$2a$10$rZ1YiLO0lPIByNDUwQFU0uJ6CwGU/FOzNixMQ8m.p79kkt90smohe",
+      "password": "$2b$10$96VUZHJHydR1OuBileAV4OceAeGZ.wOh.8SPJkFPMLrp3hXhxaIW.",
       "role": "admin"
+    },
+    {
+      "id": 101,
+      "email": "maria@gmail.com",
+      "name": "Maria Silva",
+      "password": "$2b$10$M1Y0wsG1UU3yr53X2qv/4emSsIt.mjsE3PNRYiAQXX/XQuvp7eFnC",
+      "role": "user"
+    },
+    {
+      "id": 102,
+      "email": "joao@gmail.com",
+      "name": "João Souza",
+      "password": "$2b$10$Rg7RCN8GjMIFqgvoqJDb9epIxCi2clXL.NkXWaTsmQwD7OPMCNmuO",
+      "role": "user"
+    },
+    {
+      "id": 103,
+      "email": "ana@gmail.com",
+      "name": "Ana Oliveira",
+      "password": "$2b$10$Cd6oo2e2gM6.mVNwcL/hae6OOwORFe6wUJ4FwruAwU4gPGoPuAO.C",
+      "role": "admin"
+    },
+    {
+      "id": 104,
+      "email": "carlos@gmail.com",
+      "name": "Carlos Lima",
+      "password": "$2b$10$0mPnwOtq.P3c6GruKeTKhuFHQbQGS66izoz1k3y7JPUn1msMLsEkC",
+      "role": "user"
+    },
+    {
+      "id": 105,
+      "email": "lucas@gmail.com",
+      "name": "Lucas Fernandes",
+      "password": "$2b$10$9wnslDkwNG1XBI3/INA5h.n2gpg0r.Es7byuMbtYND/4n9DqgRfm.",
+      "role": "user"
+    },
+    {
+      "id": 106,
+      "email": "juliana@gmail.com",
+      "name": "Juliana Costa",
+      "password": "$2b$10$HModtiGGyAY7Sh8BXMAkwuoGcGkCuClDEJ3763b4QNJIIBpU7UNOe",
+      "role": "admin"
+    },
+    {
+      "id": 107,
+      "email": "roberto@gmail.com",
+      "name": "Roberto Marques",
+      "password": "$2b$10$eLTyPaSVXXAFdbBlvSGoWeOuriQMkcevr.s/1Btk/g0VRlxDZlCa.",
+      "role": "user"
     }
   ]
 }

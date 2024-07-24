@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,6 +10,11 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +30,13 @@ const useAuthenticationRedirect = (isAuthenticated, navigate) => {
   }, [isAuthenticated, navigate]);
 };
 
-const handleUserAuthentication = async (email, password, login, navigate) => {
+const handleUserAuthentication = async (
+  email,
+  password,
+  login,
+  navigate,
+  setError
+) => {
   try {
     const user = await authenticateUser(email, password);
 
@@ -37,18 +48,28 @@ const handleUserAuthentication = async (email, password, login, navigate) => {
       const userRole = user.role === "admin" ? "/admin" : "/user";
       navigate(userRole);
     } else {
-      alert("Email ou senha inválidos");
+      setError("Email ou senha inválidos");
     }
   } catch (error) {
-    alert("Ocorreu um erro na autenticação");
+    if (error.response && error.response.data && error.response.data.error) {
+      setError(error.response.data.error);
+    } else {
+      setError("Ocorreu um erro na autenticação");
+    }
   }
 };
 
 export default function SignIn() {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
 
   useAuthenticationRedirect(isAuthenticated, navigate);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,11 +78,21 @@ export default function SignIn() {
     const password = data.get("password");
 
     if (!email || !password) {
-      alert("Por favor, preencha todos os campos");
+      setError("Por favor, preencha todos os campos");
+      setOpen(true);
       return;
     }
 
-    handleUserAuthentication(email, password, login, navigate);
+    handleUserAuthentication(
+      email,
+      password,
+      login,
+      navigate,
+      (errorMessage) => {
+        setError(errorMessage);
+        setOpen(true);
+      }
+    );
   };
 
   const handleCreateUser = () => {
@@ -84,7 +115,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <Box
             component="form"
@@ -122,7 +153,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Login
             </Button>
             <Button
               fullWidth
@@ -135,6 +166,17 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Atenção</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{error}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }

@@ -34,9 +34,7 @@ describe("SignIn", () => {
       </MemoryRouter>
     );
 
-    expect(
-      screen.getByRole("heading", { name: /Sign in/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Login/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
   });
