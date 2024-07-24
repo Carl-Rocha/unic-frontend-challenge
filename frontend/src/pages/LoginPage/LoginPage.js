@@ -13,7 +13,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { authenticateUser } from "../../services/api";
+import { authenticateUser } from "../../services/api/api";
 
 const defaultTheme = createTheme();
 

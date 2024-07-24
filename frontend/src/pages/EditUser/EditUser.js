@@ -18,7 +18,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { getUsers, updateUser, deleteUser } from "../../services/api";
+import { getUsers, updateUser, deleteUser } from "../../services/api/api";
 import { useAuth } from "../../context/AuthContext";
 
 const UsersTable = ({

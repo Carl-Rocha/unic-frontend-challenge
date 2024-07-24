@@ -11,7 +11,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { getUsers } from "../services/api";
+import { getUsers } from "../services/api/api";
 
 const UsersTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
