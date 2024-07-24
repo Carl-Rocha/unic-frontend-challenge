@@ -19,7 +19,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-  const { logout, user } = useAuth(); // Adicionado 'user' ao contexto
+  const { logout, user } = useAuth();
 
   const handleMenuOpen = (setter) => (event) => {
     setter(event.currentTarget);
@@ -127,7 +127,7 @@ const Navbar = () => {
             >
               Início
             </Button>
-            {user?.role === "admin" && ( // Verifica se o usuário é admin
+            {user?.role === "admin" && (
               <Button
                 color="inherit"
                 onClick={handleNavigation("/editar-usuario")}

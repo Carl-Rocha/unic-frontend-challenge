@@ -37,7 +37,7 @@ const UsersTable = () => {
         setFilteredUsers([]);
       } else {
         setFilteredUsers(usersData);
-        setError(""); // Limpa o erro se a busca for bem-sucedida
+        setError("");
       }
     } catch (error) {
       console.error("Erro ao buscar usuários", error);
@@ -55,7 +55,7 @@ const UsersTable = () => {
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
-            setError(""); // Limpa o erro ao digitar
+            setError("");
           }}
         />
         <Button variant="contained" color="primary" onClick={handleSearch}>

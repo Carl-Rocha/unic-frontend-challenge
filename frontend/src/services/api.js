@@ -1,14 +1,13 @@
 import axios from "axios";
 
-// Cria o cliente axios
 const apiClient = axios.create({
   baseURL: "https://unic-frontend-challenge-server.vercel.app/",
+  // baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Adiciona um interceptor para incluir o token em todas as requisições
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

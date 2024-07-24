@@ -9,8 +9,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { createUser } from "../services/api";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { createUser } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -21,7 +21,7 @@ export default function CreateUser() {
     password: "",
   });
 
-  const navigate = useNavigate(); // Inicializar useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +34,9 @@ export default function CreateUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createUser(userData);
+      await createUser(userData);
       alert("Usuário criado com sucesso");
-      navigate("/"); // Redirecionar para a tela de login
+      navigate("/");
     } catch (error) {
       alert("Erro ao criar usuário");
     }

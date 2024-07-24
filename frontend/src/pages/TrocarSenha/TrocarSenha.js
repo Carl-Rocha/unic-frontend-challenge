@@ -22,8 +22,8 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { updateUserPassword } from "../services/api";
+import { useAuth } from "../../context/AuthContext";
+import { updateUserPassword } from "../../services/api";
 
 const TrocarSenha = () => {
   const [currentPassword, setCurrentPassword] = useState("");

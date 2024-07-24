@@ -18,8 +18,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { getUsers, updateUser, deleteUser } from "../services/api"; // Ajuste o caminho conforme necessário
-import { useAuth } from "../context/AuthContext";
+import { getUsers, updateUser, deleteUser } from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const UsersTable = ({
   onSelectUser,
@@ -50,7 +50,7 @@ const UsersTable = ({
         setFilteredUsers([]);
       } else {
         setFilteredUsers(usersData);
-        setError(""); // Limpa o erro se a busca for bem-sucedida
+        setError("");
       }
     } catch (error) {
       console.error("Erro ao buscar usuários", error);
@@ -68,7 +68,7 @@ const UsersTable = ({
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
-            setError(""); // Limpa o erro ao digitar
+            setError("");
           }}
         />
         <Button variant="contained" color="primary" onClick={handleSearch}>
@@ -170,7 +170,7 @@ const EditUser = () => {
       await deleteUser(userId, token);
       setSuccess("Usuário deletado com sucesso!");
       setError("");
-      // Remover o usuário deletado da lista de usuários filtrados
+
       setFilteredUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== userId)
       );

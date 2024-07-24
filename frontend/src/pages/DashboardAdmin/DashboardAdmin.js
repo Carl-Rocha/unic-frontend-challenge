@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import UsersTable from "../components/UsersTable";
+import { useAuth } from "../../context/AuthContext";
+import UsersTable from "../../components/UsersTable";
 
-const DashboardUser = () => {
+const DashboardAdmin = () => {
   const [userName, setUserName] = useState(null);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -31,7 +31,7 @@ const DashboardUser = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Página simples de Usuário
+          Painel admin
         </Typography>
         {userName ? (
           <>
@@ -50,4 +50,4 @@ const DashboardUser = () => {
   );
 };
 
-export default DashboardUser;
+export default DashboardAdmin;

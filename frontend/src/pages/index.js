@@ -1,10 +1,10 @@
-import DashboardAdmin from "./DashboardAdmin";
-import DashboardUser from "./DashboardUser";
-import LoginPage from "./LoginPage";
-import TrocarSenha from "./TrocarSenha";
+import DashboardAdmin from "./DashboardAdmin/DashboardAdmin";
+import DashboardUser from "./DashboardUser/DashboardUser";
+import LoginPage from "./LoginPage/LoginPage";
+import TrocarSenha from "./TrocarSenha/TrocarSenha";
 import Navbar from "../components/NavBar";
-import EditUser from "./EditUser";
-import CreateUser from "./CreateUserPage";
+import EditUser from "./EditUser/EditUser";
+import CreateUser from "./CreateUserPage/CreateUserPage";
 
 export {
   DashboardAdmin,
