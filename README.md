@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# Desafio Técnico Frontend - UNIC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrição do Projeto
 
-## Available Scripts
+Este projeto é uma aplicação web desenvolvida em React, com o objetivo de atender aos requisitos especificados no desafio técnico da UNIC. A aplicação possui uma interface protegida por login e senha, com dois tipos de perfis de usuário (ADMIN e USER). Além disso, permite a gestão (CRUD) de usuários e visualização de perfil.
 
-In the project directory, you can run:
+## Tecnologias Utilizadas
 
-### `npm start`
+### Frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: Biblioteca principal para a construção da interface.
+- **React Router DOM**: Para gerenciamento de rotas na aplicação.
+- **Material UI**: Biblioteca de componentes de interface.
+- **Axios**: Para fazer requisições HTTP.
+- **Jest e Testing Library**: Para testes automatizados.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
 
-### `npm test`
+- **Express**: Framework para construção da API.
+- **Bcrypt**: Para hashing de senhas.
+- **Jsonwebtoken**: Para gerenciamento de tokens JWT.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Funcionalidades
 
-### `npm run build`
+1. **Autenticação**: A aplicação está protegida por login e senha.
+2. **Perfis de Usuário**:
+   - **ADMIN**: Pode realizar o CRUD de usuários e visualizar todos os usuários.
+   - **USER**: Pode visualizar os usuários do sistema.
+3. **Gestão de Usuários**: Interface para realizar operações de cadastro, leitura, atualização e exclusão (CRUD) de usuários.
+4. **Meu Perfil**: Interface para visualização e atualização de senha do usuário logado.
+5. **Pesquisa de Usuários**: Interface para pesquisa de usuários cadastrados.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Requisitos Não Funcionais
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- O frontend é desenvolvido em React.
+- Criação de testes automatizados.
+- Instruções claras de como logar na aplicação.
+- Hospedagem do projeto na Vercel.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Como Executar o Projeto
 
-### `npm run eject`
+### Pré-requisitos
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Node.js** (versão 18.x)
+- **npm** ou **yarn**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Instalação
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Clone o repositório:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```sh
+   git clone https://github.com/seu-usuario/unic-frontend-challenge.git
+   cd unic-frontend-challenge
+   ```
 
-## Learn More
+2. Instale as dependências do frontend:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```sh
+   npm install
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Instale as dependências do backend:
+   ```sh
+   cd backend
+   npm install
+   cd ..
+   ```
 
-### Code Splitting
+### Executando a Aplicação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Inicie o backend:
 
-### Analyzing the Bundle Size
+   ```sh
+   cd backend
+   npm start
+   cd ..
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. Inicie o frontend:
+   ```sh
+   npm start
+   ```
 
-### Making a Progressive Web App
+### Executando Testes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Para rodar os testes automatizados, utilize o comando:
 
-### Advanced Configuration
+```sh
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Credenciais para Login
 
-### Deployment
+| -   | ID                     | Email            | Nome     | Senha | Role |
+| --- | ---------------------- | ---------------- | -------- | ----- | ---- |
+| 2   | gleidson@gmail.com     | Gleison Jesus    | password | user  |
+| 3   | edu@gmail.com          | Eduardo Teixeira | password | user  |
+| 4   | agathagrocha@gmail.com | Agatha Rocha     | admin    | admin |
+| 5   | maria@gmail.com        | Maria Silva      | password | user  |
+| 6   | joao@gmail.com         | João Souza       | password | user  |
+| 7   | ana@gmail.com          | Ana Oliveira     | admin    | admin |
+| 8   | carlos@gmail.com       | Carlos Lima      | password | user  |
+| 9   | lucas@gmail.com        | Lucas Fernandes  | password | user  |
+| 10  | juliana@gmail.com      | Juliana Costa    | admin    | admin |
+| 11  | roberto@gmail.com      | Roberto Marques  | password | user  |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Decisões de Projeto
 
-### `npm run build` fails to minify
+- Escolhemos o **Material UI** pela facilidade de uso e pela vasta quantidade de componentes prontos que aceleram o desenvolvimento.
+- **Jest** e **Testing Library** foram escolhidos para garantir a qualidade do código por meio de testes automatizados.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Hospedagem
+
+A aplicação está hospedada no Vercel e pode ser acessada [aqui](https://unic-frontend-challenge-1ugg.vercel.app).
+
+## Considerações Finais
+
+Agradeço pela oportunidade de participar deste desafio. Todas as decisões tomadas e observações relevantes foram documentadas neste README. Para qualquer dúvida ou sugestão, por favor, entre em contato.
