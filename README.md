@@ -1,8 +1,8 @@
-# Desafio Técnico Frontend - UNIC
+# Projeto de Estudo: Desafio Técnico Frontend
 
 ## Descrição do Projeto
 
-Este projeto é uma aplicação web desenvolvida em React, com o objetivo de atender aos requisitos especificados no desafio técnico da UNIC. A aplicação possui uma interface protegida por login e senha, com dois tipos de perfis de usuário (ADMIN e USER). Além disso, permite a gestão (CRUD) de usuários e visualização de perfil.
+Este material apresenta uma visão geral de um projeto de estudo, desenvolvido com React, que tem como objetivo explorar as melhores práticas e conceitos de desenvolvimento de aplicações web. A seguir, são detalhadas as tecnologias utilizadas, as funcionalidades implementadas e as decisões de projeto adotadas.
 
 ## Tecnologias Utilizadas
 
@@ -115,4 +115,4 @@ A aplicação está hospedada no Vercel e pode ser acessada [aqui](https://unic-
 
 ## Considerações Finais
 
-Agradeço pela oportunidade de participar deste desafio. Todas as decisões tomadas e observações relevantes foram documentadas neste README. Para qualquer dúvida ou sugestão, por favor, entre em contato.
+Este projeto foi desenvolvido para estudo e prática de conceitos de frontend e backend. Sinta-se à vontade para explorar, testar e sugerir melhorias. Boas práticas e testes ajudam a construir aplicações mais confiáveis.
